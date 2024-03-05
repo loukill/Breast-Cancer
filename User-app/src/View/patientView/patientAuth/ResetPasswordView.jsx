@@ -9,47 +9,38 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-function ForgetPasswordView({ navigation }) {
-  const [email, setEmail] = useState("");
-  const handleForgotPassword = () => {
-    // try {
-    //   const response = await fetch(, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ email }),
-    //   });
-    //   const data = await response.json();
-    //   if (response.ok) {
-    //     Alert.alert('Success', data.message);
-    //   } else {
-    //     Alert.alert('Error', data.message);
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   Alert.alert('Error', 'Something went wrong');
-    // }
-    // Alert.alert("Error", "Something went wrong");
-    navigation.navigate("PatientStack", { screen: "PatientResetPasswordView" });
+function ResetPasswordView() {
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const handleResetPassword = async () => {
+    Alert.alert("Error", "Something went wrong");
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.titleText}>Forgot Password</Text>
+      <Text style={styles.titleText}>Reset Password</Text>
       <TextInput
-        placeholder="Enter your email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
+        placeholder="Enter your new password"
+        value={newPassword}
+        onChangeText={setNewPassword}
+        // keyboardType="password"
         autoCapitalize="none"
         style={styles.input}
       />
+      <TextInput
+        placeholder="confirm your new password"
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        // keyboardType="password"
+        autoCapitalize="none"
+        style={styles.input}
+      />
+
       <TouchableOpacity
         style={styles.button}
         title="Reset Password"
-        onPress={handleForgotPassword}
+        onPress={handleResetPassword}
       >
-        <Text style={styles.buttonText}>Reset Password</Text>
+        <Text style={styles.buttonText}>Set new Password</Text>
       </TouchableOpacity>
     </View>
   );
@@ -92,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForgetPasswordView;
+export default ResetPasswordView;

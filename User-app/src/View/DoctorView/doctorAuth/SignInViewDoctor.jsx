@@ -20,7 +20,7 @@ function SignInViewDoctor({ navigation }) {
       .then((response) => {
         // Handle successful login, maybe store token or navigate to another screen
         console.log("Login successful", response.data);
-        navigation.navigate("DoctorStack", { screen: "DoctorProfile" })
+        navigation.navigate("DoctorStack", { screen: "DoctorProfile" });
       })
       .catch((error) => {
         // Handle error, maybe show an error message to the user
@@ -65,6 +65,13 @@ function SignInViewDoctor({ navigation }) {
         >
           Sign Up
         </Text>
+      </Text>
+      <Text
+        onPress={() =>
+          navigation.navigate("DoctorStack", { screen: "DoctorForgetPassword" })
+        }
+      >
+        Forget Password
       </Text>
 
       <View style={styles.socialIconsContainer}>

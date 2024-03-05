@@ -6,6 +6,7 @@ import SignInViewDoctor from "../src/View/DoctorView/doctorAuth/SignInViewDoctor
 import ProfileViewDoctor from "../src/View/DoctorView/doctorAuth/ProfileViewDoctor";
 import ForgetPasswordViewDoctor from "../src/View/DoctorView/doctorAuth/ForgetPasswordViewDoctor";
 import DiplomeValidation from "../src/View/DoctorView/doctorAuth/DiplomeValidation";
+import ResetPasswordViewDoctor from "../src/View/DoctorView/doctorAuth/ResetPasswordViewDoctor";
 const Stack = createStackNavigator();
 function DoctorStack() {
   return (
@@ -17,6 +18,10 @@ function DoctorStack() {
       <Stack.Screen
         name="DoctorForgetPassword"
         component={ForgetPasswordViewDoctor}
+      />
+      <Stack.Screen
+        name="DoctorResetPassword"
+        component={ResetPasswordViewDoctor}
       />
     </Stack.Navigator>
   );

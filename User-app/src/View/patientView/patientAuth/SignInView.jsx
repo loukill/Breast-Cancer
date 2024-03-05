@@ -68,6 +68,13 @@ function SignInView({ navigation }) {
           Sign Up
         </Text>
       </Text>
+      <Text
+          onPress={() =>
+            navigation.navigate("PatientStack", { screen: "PatientForgetPassword" })
+          }
+        >
+        Forget Password
+        </Text>
 
       <View style={styles.socialIconsContainer}>{/* Social icons */}</View>
     </View>

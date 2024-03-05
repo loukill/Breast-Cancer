@@ -34,12 +34,22 @@ function SignUpView({ navigation }) {
         confirmPassword,
       })
       .then((response) => {
-        console.log("Signup successful:", response.data);
+        console.log("Signup successful:", response);
         navigation.navigate("PatientStack", { screen: "PatientProfile" });
       })
       .catch((error) => {
-        console.error("Signup error:", error.response.data);
-        // Handle signup error
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          console.error("Server responded with error:", error.response.data);
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.error("No response received:", error.request);
+        } else {
+          // Something happened in setting up the request that triggered an error
+          console.error("Error setting up the request:", error.message);
+        }
+        // Handle other types of errors
+        console.error("General error:", error);
       });
   };
 
@@ -129,13 +139,13 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: 300,
-    height: 300,
+    height: 280,
     marginBottom: 10,
   },
   titleText: {
     fontSize: 24,
 
-    marginTop: 30,
+    marginTop: 20,
   },
   input: {
     width: "80%",

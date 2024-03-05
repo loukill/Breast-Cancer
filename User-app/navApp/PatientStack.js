@@ -5,6 +5,7 @@ import SignUpView from "../src/View/patientView/patientAuth/SignUpView";
 import SignInView from "../src/View/patientView/patientAuth/SignInView";
 import ProfileView from "../src/View/patientView/patientAuth/ProfileView";
 import ForgetPasswordView from "../src/View/patientView/patientAuth/ForgetPasswordView";
+import ResetPasswordView from "../src/View/patientView/patientAuth/ResetPasswordView";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,10 @@ function PatientStack() {
       <Stack.Screen
         name="PatientForgetPassword"
         component={ForgetPasswordView}
+      />
+      <Stack.Screen
+        name="PatientResetPasswordView"
+        component={ResetPasswordView}
       />
     </Stack.Navigator>
   );
