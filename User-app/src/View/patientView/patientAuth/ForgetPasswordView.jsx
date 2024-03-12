@@ -8,31 +8,33 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-
+import axios from "axios";
 function ForgetPasswordView({ navigation }) {
   const [email, setEmail] = useState("");
-  const handleForgotPassword = () => {
-    // try {
-    //   const response = await fetch(, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ email }),
-    //   });
-    //   const data = await response.json();
-    //   if (response.ok) {
-    //     Alert.alert('Success', data.message);
-    //   } else {
-    //     Alert.alert('Error', data.message);
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   Alert.alert('Error', 'Something went wrong');
-    // }
-    // Alert.alert("Error", "Something went wrong");
-    navigation.navigate("PatientStack", { screen: "PatientResetPasswordView" });
+  const handleForgotPassword = async () => {
+    try {
+      const response = await axios.post(
+        "http://192.168.1.23:3000/authPatient/forgetPassword",
+        {
+          email: email,
+        }
+      );
+
+      if (response.status === 200) {
+        Alert.alert("Success", response.data.message);
+        navigation.navigate("PatientStack", {
+          screen: "PatientResetPasswordView",
+          params: { email: email },
+        });
+      } else {
+        Alert.alert("Error", response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Something went wrong");
+    }
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}>Forgot Password</Text>
@@ -54,7 +56,6 @@ function ForgetPasswordView({ navigation }) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

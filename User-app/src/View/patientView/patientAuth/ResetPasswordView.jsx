@@ -8,13 +8,42 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import axios from "axios";
 
-function ResetPasswordView() {
+function ResetPasswordView({ route, navigation }) {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { email } = route.params;
   const handleResetPassword = async () => {
-    Alert.alert("Error", "Something went wrong");
+    if (newPassword !== confirmPassword) {
+      Alert.alert("Error", "Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://192.168.1.23:3000/authPatient/resetPassword",
+        {
+          email, // Use the email obtained from navigation params
+          newPassword: newPassword,
+          // confirmPassword: confirmPassword,
+        }
+      );
+
+      if (response.status === 200) {
+        Alert.alert("Success", response.data.message);
+        navigation.navigate("PatientStack", {
+          screen: "PatientSignIn",
+        });
+      } else {
+        Alert.alert("Error", response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Something went wrong");
+    }
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}>Reset Password</Text>
