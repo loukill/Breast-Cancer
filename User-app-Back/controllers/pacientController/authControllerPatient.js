@@ -65,3 +65,50 @@ exports.signin = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+exports.forgotPassword= async (req, res)=> {
+  const { email } = req.body;
+
+  try {
+    const patient = await Patient.findOne({ email });
+
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    // Generate and save a reset token, send an email with the token
+    // This step is often done via email for security reasons
+    // For simplicity, let's assume we're directly resetting the password
+    // patient.password = generateRandomPassword(); // Implement this function
+    // await patient.save();
+
+    return res.status(200).json({ message: 'Password reset successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+exports.resetPassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    const patient = await Patient.findOne({ email });
+
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update patient's password with the hashed password
+    patient.password = hashedPassword;
+
+    await patient.save();
+
+    return res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};

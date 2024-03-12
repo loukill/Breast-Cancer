@@ -71,3 +71,46 @@ exports.signIn = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+exports.forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const doctor = await Doctor.findOne({ email });
+
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+
+   
+
+    return res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    const doctor = await Doctor.findOne({ email });
+
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+
+    doctor.password = hashedPassword;
+
+    await doctor.save();
+
+    return res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

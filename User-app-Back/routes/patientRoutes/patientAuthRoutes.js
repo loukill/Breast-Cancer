@@ -7,5 +7,7 @@ router.post("/signup", patientController.signup);
 
 // Signin route
 router.post("/signin", patientController.signin);
+router.post("/forgetPassword",patientController.forgotPassword)
+router.post("/resetPassword",patientController.resetPassword)
 
 module.exports = router;
